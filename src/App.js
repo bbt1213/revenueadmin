@@ -23,6 +23,7 @@ import UserVerifierImages from "./components/UserVerifierImages/UserVerifierImag
 import VerifierImageForm from "./components/VerifierImages/VerifierImageForm";
 import Home from "./components/Home/Home";
 import FranchiseImages from "./components/Franchises/FranchiseImages";
+import Subdivision from "./components/Mpdc/Subdivision/Subdivision";
 
 function App() {
   const [user, setUser] = useState("");
@@ -54,6 +55,9 @@ function App() {
           </Route>
           <Route path="/login">
             <LogIn />
+          </Route>
+          <Route path="/mpdc">
+            <Subdivision />
           </Route>
           <ProtectedRoute path="/profile" component={Profile} />
           <ProtectedRoute
