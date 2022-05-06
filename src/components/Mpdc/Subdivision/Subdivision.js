@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { Fragment } from "react/cjs/react.production.min";
 import Input from "../../common/Input";
 import Select from "../../Mpdc/common/Select";
+import businessService from "../../../service/businessService";
+import SearchBar from "../../common/SearchBar/SearchBar";
 
 const Subdivision = () => {
-  const [currentData,setCurrentData] = useState({ bploNo: "", area: ""});
-
+ 
   const DATA = [
     {
       value: 1,
@@ -174,7 +175,12 @@ const Subdivision = () => {
   const [ifComputation, setIfComputation] = useState(false);
   const [hasComputation, setHasComputation] = useState(false);
   const [selectedComputations,setSelectedComputations] = useState([]);
- 
+  const [selectedWordEntered,setSelectedWordEntered] = useState();
+  const [selectedBusinessNameWordEntered,setSelectedBusinessNameWordEntered] = useState();
+  const [currentData,setCurrentData] = useState({ bploNo: "", businessName:"",businessAddress: "",area: ""});
+  const [businessInformations,setBusinessInformations] = useState([]);
+  const [filteredItems, setFilteredItems] = useState([]);
+  const [filteredBusinessNameItems, setFilteredBusinessItems] = useState([]);
   const loadParents = () => {
     const datas = DATA.filter((a) => a.parentId === 0);
     datas.unshift({value:0,text:"Category..."});
@@ -231,24 +237,65 @@ const computeFormula = () => {
 }
 
   const handleCheckChange = (e,item) => {
-    console.log(e.target.id,item);
-
       setSelectedComputations(prevState =>   prevState.map(a=> a.value === item.value ? {...a,[e.target.id]: e.target.checked} : a) )
   }
 
   const handleInputChange = (e,item) => {
-    console.log(e.target.id,item);
-    console.log("value",e.target.value );
-
-      setSelectedComputations(prevState =>   prevState.map(a=> a.value === item.value ? {...a,[e.target.id]: e.target.value} : a) )
+       setSelectedComputations(prevState =>   prevState.map(a=> a.value === item.value ? {...a,[e.target.id]: e.target.value} : a) )
   }
 
   const handleCurrentDataChange = (e) => {
       setCurrentData((prevState => {return {...prevState, [e.target.id]: e.target.value}}));  
   }
 
+  const handleSelectedData = (item) => {
+    console.log(item);
+    setCurrentData(prevState => {return {...prevState,"bploNo": item.bploNo,"businessName": item.businessName,"businessAddress": item.businessAddress}})
+    setSelectedWordEntered(item.bploNo);
+    setSelectedBusinessNameWordEntered(item.businessName);
+  }
+
+  const getAllBusinessInformation = async () => {
+    try
+    {
+      const datas =  await businessService.getAllBusinessInformation();
+      setBusinessInformations(datas.data);
+    }catch{
+
+    }
+   
+  }
+
+  const handleBploNoFilter = (e) => {
+    
+    const searchWord = e.target.value;
+    const newFilter = businessInformations.filter((value) => {
+      return value.bploNo.toLowerCase().includes(searchWord.toLowerCase());
+    });
+      
+    if (searchWord === "") {
+      setFilteredItems([]);
+    } else setFilteredItems(newFilter);
+    setCurrentData((prevState => {return {...prevState, [e.target.id]: e.target.value}}));  
+  };
+
+  const handleBusinessNameFilter = (e) => {
+    
+    const searchWord = e.target.value;
+    const newFilter = businessInformations.filter((value) => {
+      return value.businessName.toLowerCase().includes(searchWord.toLowerCase());
+    });
+      
+    if (searchWord === "") {
+      setFilteredBusinessItems([]);
+    } else setFilteredBusinessItems(newFilter);
+
+    setCurrentData((prevState => {return {...prevState, [e.target.id]: e.target.value}}));  
+  };
+
   useEffect(() => {
     loadParents();
+    getAllBusinessInformation();
   }, [ ]);
  
 
@@ -276,8 +323,54 @@ if (hasComputation === true)
   <h1>MPDC</h1>
   <hr/>
   <h2>Information</h2>
- <Input id="bploNo" label="Bplo Number" type="text" onChange={handleCurrentDataChange}/>
- <Input id="area" label="Area (sqm)" type="text" onChange={handleCurrentDataChange}/>
+  <div className="row">
+    <div className="col-md-4">
+    <label htmlFor="bploNo" className="col-md-4 col-form-label required">
+          Bplo Number:  
+        </label>
+    </div>
+    <div className="col-md-8 mb-3">
+    <SearchBar
+                id="bploNo"
+                placeHolder="Enter a description.."
+                items={businessInformations}
+                onSelectData={handleSelectedData}
+                wordEntered={selectedWordEntered}
+                setWordEntered={setSelectedWordEntered}
+                keyName="bploNo"
+                returnValueFieldName="bploNo"
+                description="businessName"
+                handleFilter={handleBploNoFilter}
+                setFilteredItems={setFilteredItems}
+                filteredItems={filteredItems}
+              />
+ </div>
+  </div>
+  <div className="row">
+    <div className="col-md-4">
+    <label htmlFor="businessName" className="col-md-4 col-form-label required">
+          Business Name:
+        </label>
+    </div>
+    <div className="col-md-8 mb-3">
+    <SearchBar
+                id="businessName"
+                placeHolder="Enter a Business Name.."
+                items={businessInformations}
+                onSelectData={handleSelectedData}
+                wordEntered={selectedBusinessNameWordEntered}
+                setWordEntered={setSelectedBusinessNameWordEntered}
+                keyName="businessName"
+                returnValueFieldName="businessName"
+                description="bploNo"
+                handleFilter={handleBusinessNameFilter}
+                setFilteredItems={setFilteredBusinessItems}
+                filteredItems={filteredBusinessNameItems}
+              />
+ </div>
+  </div>
+  <Input id="businessAddress" label="Business Address" type="text" onChange={handleCurrentDataChange} value={currentData.businessAddress}/>
+   <Input id="area" label="Area (sqm)" type="text" onChange={handleCurrentDataChange} value={currentData.area}/>
   <hr/>
   <h2>Categories</h2>
   <hr/>
