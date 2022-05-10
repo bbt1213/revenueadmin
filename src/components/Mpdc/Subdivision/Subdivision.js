@@ -15,8 +15,9 @@ const Subdivision = () => {
       text: "Approval of Subdivision Plan (including town houses)",
       parentId: 0,
       level: 1,
-      
-      hasComputation: true
+      hasComputation: true,
+      sequence:1,
+      total: 0,
     },
     {
       value: 14,
@@ -25,8 +26,10 @@ const Subdivision = () => {
       parentId: 1,
       ifTitle: true,
       level: 2,
+      sequence:2,
       hasComputation:true,
-      miscellaneousTaxCodeId: 1003
+      
+      total: 0,
     },
     {
       value: 16,
@@ -37,10 +40,10 @@ const Subdivision = () => {
       formula: "1500 * area / 10000",
       computation: "1,500/ha regardless of density",
       level: 3,
-      
       hasComputation:true,
       ifCheck: true,
       total: 0,
+      sequence:2,
       miscellaneousTaxCodeId: 1003
     },
     {
@@ -50,7 +53,9 @@ const Subdivision = () => {
       parentId: 1,
       ifTitle: true,
       level: 2,
-      hasComputation:true
+      sequence:2,
+      hasComputation:true,
+      total: 0,
     },
     {
       value: 19,
@@ -61,16 +66,19 @@ const Subdivision = () => {
       formula: "2880 * area / 10000",
       computation: "2,880.00/ha regardless of density",
       level: 3,
-      
+      sequence:2,
       hasComputation:true,
-      ifCheck: true,  total: 0    
+      ifCheck: true,  total: 0,
+      miscellaneousTaxCodeId: 1003
     },
     {
       value: 20,
       text: "b.  Approval of Condominium Project",
       parentId: 0,
       level: 1,
-      hasComputation: true
+      hasComputation: true,
+      sequence:2,
+      total: 0,
     },
     {
       value: 21,
@@ -79,7 +87,9 @@ const Subdivision = () => {
       parentId: 20,
       ifTitle: true,
       level: 1,
-      hasComputation: true
+      hasComputation: true,
+      sequence:2,
+      total: 0,
     },
     {
       value: 22,
@@ -90,10 +100,11 @@ const Subdivision = () => {
       formula: "1500 * area / 10000",
       computation: "1,500/ha regardless of density",
       level: 3,
-      
+      sequence:2,
       hasComputation:true,
       ifCheck: true,
-      total: 0    
+      total: 0 ,
+      miscellaneousTaxCodeId: 1003
     },
     {
       value: 18,
@@ -104,7 +115,7 @@ const Subdivision = () => {
       formula: "3 * area",
       computation: "3.00 /sq m",
       level: 3,
-      
+      sequence:2,
       hasComputation:true,
       ifCheck: true,  total: 0    
     },
@@ -115,55 +126,11 @@ const Subdivision = () => {
       computation: "360.00/ha or a fraction thereof",
       parentId: 14,
       level: 3,
-      
+      sequence:2,
       hasComputation: true,
       ifCheck: true,  total: 0    
     },
-    {
-      value: 7,
-      text: "Approval of Condominium Project",
-      parentId: 0,
-      level: 1,
-    },
-    {
-      value: 8,
-      text: "Projects under BP 220",
-      parentId: 0,
-      level: 1,
-    },
-    {
-      value: 9,
-      text: "Subdivision",
-      parentId: 8,
-      level: 2,
-    },
-    {
-      value: 10,
-      text: "Preliminary Approval and Locational Clearance",
-      parentId: 9,
-      level: 3,
-    },
-    {
-      value: 12,
-      text: "Socialized Housing",
-      formula: "100.00 * area / 10000",
-      computation: "100.00 / ha",
-      parentId: 10,
-      level: 4,
-      amount: "",
-      
-      ifCheck: true,
-    },
-    {
-      value: 13,
-      text: "Economic Housing",
-      formula: "200.00 * area / 10000",
-      computation: "200.00 / ha",
-      parentId: 10,
-      level: 4,
-      
-      ifCheck: true,
-    },
+     
   ];
 
   const [step, setStep] = useState(1);
@@ -313,7 +280,7 @@ const computeFormula = () => {
     
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log('submitted');
     e.preventDefault();
     try {
@@ -323,9 +290,10 @@ const computeFormula = () => {
         return {
           ...prevState,
           dateOfApplication: today.toLocaleDateString(),
+          items: selectedComputations
         };
       });
-      // const data = await businessService.renew(datas, images);
+       const data = await mpdcService.submitApplication(currentData, today, selectedComputations);
       setIsSubmitted(true);
     } catch (ex) {
       setSending(false);
