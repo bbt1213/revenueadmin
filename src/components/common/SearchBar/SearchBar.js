@@ -38,9 +38,9 @@ const SearchBar = ({
   };
 
   const selectInput = (e, arg) => {
-    setFilteredItems([]);
-    
-      setWordEntered(arg[returnValueFieldName]);
+    setFilteredItems([]);   
+ 
+    setWordEntered(arg[returnValueFieldName]);
     onSelectData(arg);
   };
 
