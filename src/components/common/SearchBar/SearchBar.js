@@ -70,6 +70,7 @@ const SearchBar = ({
           className="form-control"
           onKeyDown={handleKeyDown}
           id={id}
+          autoComplete="off"
         ></input>
       </div>
       {filteredItems.length > 0 && (

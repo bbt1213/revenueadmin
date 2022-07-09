@@ -1,10 +1,10 @@
 import React, { Fragment } from "react";
 
-const Input = ({ id, type, label, value, onChange, error, ...res }) => {
+const Input = ({ id, type, label, value, onChange, error,required, ...res }) => {
   return (
     <Fragment>
-      <div className="mb-3 row">
-        <label htmlFor={id} className="col-md-4 col-form-label required">
+      <div className={`mb-3 row ${required && "form-group required"}`}>
+        <label htmlFor={id} className={`col-md-4 col-form-label ${required && "control-label"}`}>
           {label}
         </label>
         <div className="col-md-8">
@@ -18,8 +18,8 @@ const Input = ({ id, type, label, value, onChange, error, ...res }) => {
           />
         </div>
         {error && (
-          <div className="row ml-10">
-            <span className="mx-3 alert alert-danger">Error</span>
+          <div className="row ml-10 mt-3">
+            <span className="mx-3 alert alert-danger">{error}</span>
           </div>
         )}
       </div>

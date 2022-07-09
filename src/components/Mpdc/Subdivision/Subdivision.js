@@ -4144,6 +4144,8 @@ const Subdivision = () => {
     floor: "2",
     lot: "",
   });
+
+  const [currentError, setCurrentError] = useState({tpiNo: ""});
   // const [businessInformations,setBusinessInformations] = useState([]);
   const [taxPayerInformations, setTaxPayerInformations] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
@@ -4323,7 +4325,7 @@ const Subdivision = () => {
 
   const handleTaxPayerNameFilter = (e) => {
     const searchWord = e.target.value;
-
+    setCurrentData(prevState => { return {...prevState,tpiNo: ""}});
     const newFilter = taxPayerInformations.filter((value) => {
       return value.name.toLowerCase().includes(searchWord.toLowerCase());
     });
@@ -4334,16 +4336,20 @@ const Subdivision = () => {
         return { ...prevState, tpiNo: "" };
       });
     } else setFilteredItems(newFilter);
-
+    setCurrentError(prevState => {return {...prevState,tpiNo: ""}})
     setCurrentData((prevState) => {
       return { ...prevState, [e.target.id]: e.target.value };
     });
   };
 
   const handleSubmit = async (e) => {
-    console.log("submitted");
     e.preventDefault();
     try {
+      if (!currentData.tpiNo)
+      {
+        setCurrentError(prevState => {return {...prevState,tpiNo: "Please type the taxpayer name and select on the drop down list."}})
+        return;
+      }
       setSending(true);
       const today = new Date();
       setCurrentData((prevState) => {
@@ -4486,6 +4492,16 @@ const Subdivision = () => {
                     />
        </div>
         </div> */}
+        <Input
+            id="tpiNo"
+            label="TPI Number"
+            type="text"
+            onChange={handleCurrentDataChange}
+            value={currentData.tpiNo}
+            error={currentError.tpiNo}
+            readOnly={true}
+            required={true}
+          />
           <div className="row">
             <div className="col-md-4">
               <label
