@@ -3,6 +3,9 @@ import logger from "./logService";
 import { toast } from "react-toastify";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+axios.defaults.headers.common["x-ebpls-code"] = "Ebpls_Client";
+axios.defaults.headers.common["x-ebpls-token"] =
+  "55e2d91f113c51ce97d94dc95f382b8a66ac50280e0fc78a1436326ec938046e";
 
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
