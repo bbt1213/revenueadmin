@@ -4043,7 +4043,7 @@ const Subdivision = () => {
       locationClearanceTypeId: "2",
       minAmount: 2000001,
       maxAmount: 999999999,
-      formula: "3600 + (.1 * .01 (amount - 200000))",
+      formula: "3600 + (.1 * .01 * (amount - 2000000))",
     },
     {
       value: 7,
@@ -4057,21 +4057,21 @@ const Subdivision = () => {
       locationClearanceTypeId: "3",
       minAmount: 2000001,
       maxAmount: 999999999,
-      formula: "3600 + (.1 * .01 (amount - 200000))",
+      formula: "3600 + (.1 * .01 * (amount - 2000000))",
     },
     {
       value: 9,
       locationClearanceTypeId: "4",
       minAmount: 0,
       maxAmount: 2000000,
-      formula: "2800",
+      formula: "2880",
     },
     {
       value: 10,
       locationClearanceTypeId: "4",
       minAmount: 2000001,
       maxAmount: 999999999,
-      formula: "2800 + (.1 * .01 (amount - 200000))",
+      formula: "2880 + (.1 * .01 * (amount - 2000000))",
     },
     {
       value: 11,
@@ -4106,7 +4106,7 @@ const Subdivision = () => {
       locationClearanceTypeId: "5",
       minAmount: 2000001,
       maxAmount: 999999999,
-      formula: "7200 + (.1 * .01 (amount - 200000))",
+      formula: "7200 + (.1 * .01 * (amount - 2000000))",
     },
     {
       value: 16,
@@ -4120,7 +4120,7 @@ const Subdivision = () => {
       locationClearanceTypeId: "6",
       minAmount: 2000001,
       maxAmount: 999999999,
-      formula: "7200 + (.1 * .01 (amount - 200000))",
+      formula: "7200 + (.1 * .01 * (amount - 2000000))",
     },
   ];
 
