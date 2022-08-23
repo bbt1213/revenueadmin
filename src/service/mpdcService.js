@@ -31,9 +31,14 @@ const submitApplication = async (
   return await http.post(`${apiEndpoint}/add`, mpdcApplicationData);
 };
 
+const   getMpdcHierarchies = async () =>  {
+  return await http.get(`${apiEndpoint}/hierarchys`);
+};
+
 const mpdcService = {
   getTaxPayers,
   submitApplication,
+  getMpdcHierarchies
 };
 
 export default mpdcService;
