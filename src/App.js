@@ -12,6 +12,7 @@ import NavBar from "./components/NavBar/NavBar";
 import NotFound from "./components/common/NotFound";
 import Businesses from "./components/Businesses/Businesses";
 import Franchises from "./components/Franchises/Franchises";
+import IndividualCommunityTax from "./components/CommunityTax/Individual/IndividualCommunityTax";
 import LogIn from "./components/Login/login";
 import Logout from "./components/Logout";
 import Profile from "./components/Profile/Profile";
@@ -23,6 +24,7 @@ import UserVerifierImages from "./components/UserVerifierImages/UserVerifierImag
 import VerifierImageForm from "./components/VerifierImages/VerifierImageForm";
 import Home from "./components/Home/Home";
 import FranchiseImages from "./components/Franchises/FranchiseImages";
+import CommunityTaxIndividualImages from "./components/CommunityTax/Individual/IndividualCommunityTaxImages";
 import Subdivision from "./components/Mpdc/Subdivision/Subdivision";
 
 function App() {
@@ -68,9 +70,14 @@ function App() {
             path="/franchises/:userverifierid/images/:ptfranchisedetailwebid"
             component={FranchiseImages}
           />
+          <ProtectedRoute
+            path="/communityTaxIndividuals/:userverifierid/images/:communityTaxIndividualId"
+            component={CommunityTaxIndividualImages}
+          />
           <ProtectedRoute path="/Home" component={Home} />
           <ProtectedRoute path="/businesses" component={Businesses} />
           <ProtectedRoute path="/franchises" component={Franchises} />
+          <ProtectedRoute path="/individualcommunitytax" component={IndividualCommunityTax} />
           <ProtectedRoute path="/images/:id" component={VerifierImageForm} />
           <ProtectedRoute path="/images" component={VerifierImages} />
           <ProtectedRoute path="/users" component={Users} />

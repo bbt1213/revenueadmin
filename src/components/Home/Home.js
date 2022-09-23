@@ -12,6 +12,9 @@ const Home = () => {
       case "FT":
         window.location = "/franchises";
         break;
+      case "CT":
+        window.location = "/individualcommunitytax";
+        break;
       default:
         window.location = "/images";
         break;

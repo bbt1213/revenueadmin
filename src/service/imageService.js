@@ -28,6 +28,17 @@ export async function updateImageStatusByPtFranchiseDocumentVerificationId(
   );
 }
 
+export async function updateImageStatusByCommunityTaxIndividualDocumentVerificationId(
+  documentVerificationId,
+  status,
+  remarks
+) {
+  return await http.post(
+    `${apiEndpoint}/communityTaxIndividualDocumentVerifications/${documentVerificationId}`,
+    { status, remarks }
+  );
+}
+
 export async function SaveImage(image) {
   const data = {
     imageName: image.imageName,
@@ -62,6 +73,7 @@ const imageService = {
   SaveImage,
   GetDepartmentStatus,
   updateImageStatusByPtFranchiseDocumentVerificationId,
+  updateImageStatusByCommunityTaxIndividualDocumentVerificationId
 };
 
 export default imageService;
