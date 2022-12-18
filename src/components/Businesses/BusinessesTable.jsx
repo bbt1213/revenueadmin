@@ -25,7 +25,11 @@ const BusinessesTable = (props) => {
     },
 
     { path: "dateOfApplication", label: "Date of Application" },
-    { path: "imageStatus", label: "Status" },
+    {path:"userVerified", label: "User Verified"},
+    {path: "unverified",label: "Unverified"},
+    {path: "approved",label: "Approved"},
+    {path: "disApproved",label: "Disapproved"},
+    {path: "totalDocuments",label: "Total Documents"},
     // {
     //   key: "like",
     //   content: (movie) => (

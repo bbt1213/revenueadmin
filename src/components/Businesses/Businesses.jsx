@@ -36,6 +36,7 @@ const Businesses = () => {
         userVerifierId
       );
 
+      console.log(data);
       setBusinesses(data["data"]);
 
       setLoading(false);
