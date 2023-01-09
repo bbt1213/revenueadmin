@@ -26,9 +26,15 @@ const BusinessesTable = (props) => {
 
     { path: "dateOfApplication", label: "Date of Application" },
     {path:"userVerified", label: "User Verified"},
-    {path: "unverified",label: "Unverified"},
-    {path: "approved",label: "Approved"},
-    {path: "disApproved",label: "Disapproved"},
+    {path: "unverified",label: "Unverified",content: (business) => {  return (
+      <div  data-toggle="tooltip" title={business.departmentUnverified} data-placement="bottom"  >{business.unverified}</div>)
+    }},
+    {path: "approved",label: "Approved",content: (business) => {  return (
+      <div  data-toggle="tooltip" title={business.departmentApproved} data-placement="bottom"  >{business.approved}</div>)
+    }},
+    {path: "disApproved",label: "Disapproved",content: (business) => {  return (
+      <div  data-toggle="tooltip" title={business.departmentDisapproved} data-placement="bottom"  >{business.disApproved}</div>)
+    }},
     {path: "totalDocuments",label: "Total Documents"},
     // {
     //   key: "like",
