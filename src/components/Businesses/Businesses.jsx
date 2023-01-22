@@ -47,7 +47,27 @@ const Businesses = () => {
   };
 
   useEffect(() => {
-    getAllUserImages();
+    const interval = setInterval(async () => {
+      try {
+        
+        const data = await businessService.getAllUnverifiedBusiness(
+          userVerifierId
+        );
+
+        
+        setBusinesses(data["data"]);
+  
+         
+      } catch (ex) {
+        setBusinesses((prevState) => {
+          return[];
+        });
+        // setDatas((prevState) => {
+        //   return [...datas];
+        // });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // const handlePageChange = (page) => {
