@@ -43,7 +43,23 @@ const Franchises = () => {
   };
 
   useEffect(() => {
-    getAllUserImages();
+    const interval = setInterval(async () => {
+      try {
+        const data = await franchiseService.getAllUnverifiedFranchise(
+          userVerifierId
+        );
+
+        setfranchises(data["data"]);
+      } catch (ex) {
+        setfranchises((prevState) => {
+          return [];
+        });
+        // setDatas((prevState) => {
+        //   return [...datas];
+        // });
+      }
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // const handlePageChange = (page) => {
